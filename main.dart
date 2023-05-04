@@ -1,62 +1,58 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(Ativ());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class Ativ extends StatefulWidget {
   @override
+  State<Ativ> createState() => _AulaState();
+}
+
+class _AulaState extends State<Ativ> {
+  var pessoa = '';
+  var contagem = 0;
+  var texto = '';
+  final pessoas = ["Pedro", "Otávio", "João", "Rafael"];
+
+  void click() {
+    setState(() {
+      if (contagem == 3) {
+        contagem = 0;
+      } else {
+        contagem++;
+      }
+    });
+    print(contagem);
+  }
+
+  void decisao() {
+    setState(() {
+      pessoa = pessoas[contagem];
+      texto = '$pessoa é o mais legal';
+    });
+    print(texto);
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Atividade Flutter',
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  final List<String> words = ['Aprendendo', 'Programação', 'Flutter'];
-
-  final List<String> buttonLabels = ['Enviar', 'Cancelar', 'Salvar'];
-
-  MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Atividade Flutter'),
-      ),
-      body: Row(
-        children: [
-          Expanded(
-            child: Column(
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text("Questionário sério!!"),
+            ),
+            body: Center(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (String word in words)
-                  Text(
-                    word,
-                    style: const TextStyle(fontSize: 24.0),
-                  ),
+                Text('Quem é mais legal?'),
+                Text(pessoas[contagem]),
+                ElevatedButton(onPressed: click, child: Text("Clique aq")),
+                ElevatedButton(
+                    onPressed: decisao, child: Text("Clique para decidir")),
+                SizedBox(
+                  child: Text(texto),
+                )
               ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (String label in buttonLabels)
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text(label),
-                  ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+            ))));
   }
 }
